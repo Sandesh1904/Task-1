@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <string.h>
+
+// Structure to represent a student
+typedef struct {
+    char name[50];
+    int roll_number;
+    float grades[5]; // assume 5 courses
+} Student;
+
+// Function to add a new student
+void add_student(Student students[], int *num_students) {
+    printf("Enter student name: ");
+    scanf("%s", students[*num_students].name);
+    printf("Enter roll number: ");
+    scanf("%d", &students[*num_students].roll_number);
+    for (int i = 0; i < 5; i++) {
+        printf("Enter grade for course %d: ", i + 1);
+        scanf("%f", &students[*num_students].grades[i]);
+    }
+    (*num_students)++;
+}
+
+// Function to edit a student's information
+void edit_student(Student students[], int num_students) {
+    int roll_number;
+    printf("Enter roll number of student to edit: ");
+    scanf("%d", &roll_number);
+    for (int i = 0; i < num_students; i++) {
+        if (students[i].roll_number == roll_number) {
+            printf("Enter new student name: ");
+            scanf("%s", students[i].name);
+            for (int j = 0; j < 5; j++) {
+                printf("Enter new grade for course %d: ", j + 1);
+                scanf("%f", &students[i].grades[j]);
+            }
+            return;
+        }
+    }
+    printf("Student not found!\n");
+}
+
+// Function to delete a student's information
+void delete_student(Student students[], int *num_students) {
+    int roll_number;
+    printf("Enter roll number of student to delete: ");
+    scanf("%d", &roll_number);
+    for (int i = 0; i < *num_students; i++) {
+        if (students[i].roll_number == roll_number) {
+            for (int j = i; j < *num_students - 1; j++) {
+                students[j] = students[j + 1];
+            }
+            (*num_students)--;
+            return;
+        }
+    }
+    printf("Student not found!\n");
+}
+
+// Function to calculate grades
+void calculate_grades(Student students[], int num_students) {
+    for (int i = 0; i < num_students; i++) {
+        float total = 0;
+        for (int j = 0; j < 5; j++) {
+            total += students[i].grades[j];
+        }
+        float average = total / 5;
+        printf("Student %s (Roll Number: %d) has an average grade of %.2f\n",
+               students[i].name, students[i].roll_number, average);
+    }
+}
+
+int main() {
+    Student students[100]; // assume max 100 students
+    int num_students = 0;
+
+    while (1) {
+        printf("1. Add student\n");
+        printf("2. Edit student\n");
+        printf("3. Delete student\n");
+        printf("4. Calculate grades\n");
+        printf("5. Exit\n");
+        int choice;
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                add_student(students, &num_students);
+                break;
+            case 2:
+                edit_student(students, num_students);
+                break;
+            case 3:
+                delete_student(students, &num_students);
+                break;
+            case 4:
+                calculate_grades(students, num_students);
+                break;
+            case 5:
+                return 0;
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+
+    return 0;
+}
