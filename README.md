@@ -35,3 +35,10 @@ This Student Management System is a console-based application written in C. It a
    ```bash
    gcc -o student_management student_management.c
 
+## Output 
+![image](https://github.com/user-attachments/assets/78c0a23a-e316-4826-9652-7d512858f56e)
+
+![image](https://github.com/user-attachments/assets/b2c4dc32-2e10-4241-a036-ac3a089e33a2)
+
+
+
